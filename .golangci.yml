@@ -1,0 +1,51 @@
+version: "2"
+
+run:
+  timeout: 5m
+
+linters:
+  enable:
+    - bodyclose
+    - errcheck
+    - errorlint        # errors.Is/As instead of == and type assertions
+    - exhaustive       # switch statements cover every enum value
+    - gocognit
+    - gocritic
+    - gosec
+    - govet
+    - ineffassign
+    - misspell
+    - nilerr
+    - noctx
+    - revive
+    - staticcheck
+    - unconvert
+    - unparam
+    - unused
+  settings:
+    exhaustive:
+      default-signifies-exhaustive: true
+    gocognit:
+      min-complexity: 25
+    revive:
+      rules:
+        - name: exported
+          disabled: true # DTO and constructor names are self-describing
+        - name: package-comments
+        - name: var-naming
+        - name: indent-error-flow
+        - name: early-return
+        - name: unused-parameter
+  exclusions:
+    rules:
+      - path: _test\.go
+        linters: [gosec, gocognit, errcheck]
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    goimports:
+      local-prefixes:
+        - github.com/sarijansharma/tracker-mcp
